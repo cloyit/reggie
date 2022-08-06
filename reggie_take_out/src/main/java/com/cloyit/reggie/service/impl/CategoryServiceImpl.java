@@ -17,11 +17,8 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
     @Autowired
     private SetmealService setmealService;
-
     @Autowired
     private DishService dishService;
-
-
     @Override
     public void remove(long id) {
         LambdaQueryWrapper<Dish> wrapper1 = new LambdaQueryWrapper<>();

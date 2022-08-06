@@ -8,10 +8,25 @@ spring:
     url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: chy030825
+  redis:
+    database: 0
+    host: 150.158.82.164
+    port: 6379
+  cache:
+    redis:
+      time-to-live: 1h
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db_config:
-      id-type: ASSIGN_ID
+        logic-delete-field: isDeleted
+        logic-delete-value: 1
+        logic-not-delete-value: 0
+    id-type: ASSIGN_ID
+
+
+reggie:
+  path: D:\courses\实习\reggie\images\

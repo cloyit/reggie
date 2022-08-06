@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cloyit.reggie.common.R;
 import com.cloyit.reggie.entity.Category;
 import com.cloyit.reggie.service.CategoryService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/category")
+@Api(tags = "分类信息管理相关接口")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
@@ -66,4 +68,20 @@ public class CategoryController {
         return R.success("修改完成");
     }
 
+    /**
+     * 根据条件查询分类
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Category>> list(Category category){
+        //条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        //添加条件
+        queryWrapper.eq(category.getType() != null,Category::getType,category.getType());
+        //排序条件
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        List<Category> list = categoryService.list(queryWrapper);
+        return R.success(list);
+    }
 }
